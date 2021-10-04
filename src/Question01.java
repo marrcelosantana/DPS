@@ -22,7 +22,7 @@ public class Question01 {
             lugares.add(line);
         }
 
-        System.out.println("Digite a palavra que está procurando");
+        System.out.println("Digite a palavra que está procurando: ");
         String palavra = scanner.nextLine();
 
         for(String x: lugares){
