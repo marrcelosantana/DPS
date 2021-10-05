@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class Question02 {
     public static void Escrever(String conteudo, String destino) throws IOException{
-        OutputStream os = new FileOutputStream(destino, true); //Cria o arquivo para o destino.
+        OutputStream os = new FileOutputStream(destino, true);
         OutputStreamWriter osw = new OutputStreamWriter(os);
-        BufferedWriter bw = new BufferedWriter(osw); //Renderiza o arquivo.
+        BufferedWriter bw = new BufferedWriter(osw);
 
-        if(conteudo != null){ //Escreve o conteúdo dentro do arquivo.
+        if(conteudo != null){
             bw.write(conteudo);
             bw.newLine();
         }
