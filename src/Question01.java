@@ -31,6 +31,8 @@ public class Question01 {
             }
         }
 
+        bf.close();
+
     }
 
 }
