@@ -9,25 +9,25 @@ public class Question01 {
 
         InputStream is = new FileInputStream(scanner.nextLine());
 
-        ArrayList<String> lugares = new ArrayList<>();
+        ArrayList<String> places = new ArrayList<>();
 
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader bf = new BufferedReader(isr);
 
         String line = bf.readLine();
-        lugares.add(line);
+        places.add(line);
 
         while (line != null){
             line = bf.readLine();
-            lugares.add(line);
+            places.add(line);
         }
 
         System.out.println("Digite a palavra que está procurando: ");
-        String palavra = scanner.nextLine();
+        String word = scanner.nextLine();
 
-        for(String x: lugares){
-            if(x != null && x.contains(palavra)){
-                System.out.println(x);
+        for(String i : places){
+            if(i != null && i.contains(word)){
+                System.out.println(i);
             }
         }
 
