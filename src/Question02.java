@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class Question02 {
     public static void Escrever(String conteudo, String destino) throws IOException{
-        OutputStream os = new FileOutputStream(destino, true);
+        OutputStream os = new FileOutputStream(destino, true); //Cria o arquivo para o destino.
         OutputStreamWriter osw = new OutputStreamWriter(os);
-        BufferedWriter bw = new BufferedWriter(osw);
+        BufferedWriter bw = new BufferedWriter(osw); //Renderiza o arquivo.
 
-        if(conteudo != null){
+        if(conteudo != null){ //Escreve o conteúdo dentro do arquivo.
             bw.write(conteudo);
             bw.newLine();
         }
@@ -36,14 +36,14 @@ public class Question02 {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Qual o nome do seu primeiro arquivo? ");
-        String a = scanner.nextLine();
+        String primeiroArquivo = scanner.nextLine();
         System.out.println("Qual o nome do seu segundo arquivo? ");
-        String b = scanner.nextLine();
+        String segundoArquivo = scanner.nextLine();
         System.out.println("Digite o nome do arquivo para onde quer copiar os dados: ");
-        String c = scanner.nextLine();
+        String arquivoDestino = scanner.nextLine();
 
-        Copiar(a, c);
-        Copiar(b, c);
+        Copiar(primeiroArquivo, arquivoDestino);
+        Copiar(segundoArquivo, arquivoDestino);
     }
 }
 
