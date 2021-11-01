@@ -13,4 +13,9 @@
   "especie" : "Hamster",
   "genero" : "Feminino",
   "idade" : 3
+}, {
+  "nome" : "Leticia",
+  "especie" : "Rato",
+  "genero" : "Feminino",
+  "idade" : 4
 } ]

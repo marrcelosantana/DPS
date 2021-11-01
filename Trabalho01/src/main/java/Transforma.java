@@ -7,10 +7,6 @@ import java.util.Scanner;
 
 public class Transforma {
     public void escrever(String arquivo) throws IOException{
-        FileOutputStream fos = new FileOutputStream(arquivo, true);
-        OutputStreamWriter osw = new OutputStreamWriter(fos);
-        BufferedWriter bw = new BufferedWriter(osw);
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o nome do Animal:");
         String nome = scanner.nextLine();
@@ -25,6 +21,10 @@ public class Transforma {
         int idade = scanner.nextInt();
 
         Animal animal = new Animal(nome, especie, genero, idade);
+
+        FileOutputStream fos = new FileOutputStream(arquivo, true);
+        OutputStreamWriter osw = new OutputStreamWriter(fos);
+        BufferedWriter bw = new BufferedWriter(osw);
 
         bw.write(animal.getNome()+","+animal.getEspecie()+","+animal.getGenero()+","+animal.getIdade());
         bw.newLine();
@@ -54,7 +54,6 @@ public class Transforma {
         }
         return animais;
     }
-
 
     public void transformarXML(String origem, File destino) throws IOException{
         List<Animal> animais = lerArquivo(origem);
