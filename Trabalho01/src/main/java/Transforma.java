@@ -6,35 +6,32 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Transforma {
-    public Animal cadastrar() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Digite o nome do Animal:");
-        String nome = scanner.nextLine();
-
-        System.out.println("Digite a espécie do Animal");
-        String especie = scanner.nextLine();
-
-        System.out.println("Digite o gênero do Animal");
-        String genero = scanner.nextLine();
-
-        System.out.println("Digite a idade do Animal");
-        int idade = scanner.nextInt();
-
-        return new Animal(nome, especie, genero, idade);
-    }
-
     public void escrever(String arquivo) throws IOException{
         FileOutputStream fos = new FileOutputStream(arquivo, true);
         OutputStreamWriter osw = new OutputStreamWriter(fos);
         BufferedWriter bw = new BufferedWriter(osw);
 
-        Animal animal = cadastrar();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o nome do Animal:");
+        String nome = scanner.nextLine();
+
+        System.out.println("Digite a espécie do Animal:");
+        String especie = scanner.nextLine();
+
+        System.out.println("Digite o gênero do Animal:");
+        String genero = scanner.nextLine();
+
+        System.out.println("Digite a idade do Animal:");
+        int idade = scanner.nextInt();
+
+        Animal animal = new Animal(nome, especie, genero, idade);
+
         bw.write(animal.getNome()+","+animal.getEspecie()+","+animal.getGenero()+","+animal.getIdade());
         bw.newLine();
         bw.close();
     }
 
-    public List<Animal> ler(String arquivo) throws IOException{
+    public List<Animal> lerArquivo(String arquivo) throws IOException{
         InputStream is = new FileInputStream(arquivo);
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
@@ -58,15 +55,18 @@ public class Transforma {
         return animais;
     }
 
+
     public void transformarXML(String origem, File destino) throws IOException{
-        List<Animal> animais = ler(origem);
+        List<Animal> animais = lerArquivo(origem);
         XmlMapper xm = new XmlMapper();
         xm.writeValue(destino, animais);
+        xm.writerWithDefaultPrettyPrinter().writeValue(destino,animais);
     }
 
     public void transformarJSON(String origem, File destino) throws IOException{
-        List<Animal> animais = ler(origem);
+        List<Animal> animais = lerArquivo(origem);
         ObjectMapper om = new ObjectMapper();
         om.writeValue(destino, animais);
+        om.writerWithDefaultPrettyPrinter().writeValue(destino,animais);
     }
 }
