@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Question01 {
+    private static Scanner scanner;
+
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
