@@ -49,10 +49,10 @@ public class Main {
                 "3: Editar um funcionário\n" +
                 "4: Buscar um único funcionário\n" +
                 "5: Listar todos os funcionários\n" +
-                "6: Sair do sistema\n";
+                "x: Sair do sistema\n";
         char escolha = '0';
 
-        while(escolha != '6'){
+        while(escolha != 'x'){
             escolha = JOptionPane.showInputDialog(opcoes).charAt(0);
             if(escolha == '1'){ //Inserir um funcionário.
                 Funcionario funcionario = new Funcionario();
