@@ -20,7 +20,8 @@ public class FuncionarioJDBCDAO implements FuncionarioDAO{
     @Override
     public void inserir(Funcionario funcionario)  {
         String consulta = "insert into funcionarios (cpf, matricula, nome, email, telefone) values (:cpf, :matricula, :nome, :email, :telefone)";
-        MapSqlParameterSource params = new MapSqlParameterSource().addValue("cpf", funcionario.getCpf())
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("cpf", funcionario.getCpf())
                 .addValue("matricula", funcionario.getMatricula())
                 .addValue("nome", funcionario.getNome())
                 .addValue("email", funcionario.getEmail())
@@ -65,7 +66,8 @@ public class FuncionarioJDBCDAO implements FuncionarioDAO{
     @Override
     public void editar(Funcionario funcionario)  {
         String consulta = "update funcionarios set cpf = :cpf, matricula = :matricula, nome = :nome, email = :email, telefone = :telefone where id = :id";
-        MapSqlParameterSource params = new MapSqlParameterSource().addValue("cpf", funcionario.getCpf())
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("cpf", funcionario.getCpf())
                 .addValue("matricula", funcionario.getMatricula())
                 .addValue("nome", funcionario.getNome())
                 .addValue("email", funcionario.getEmail())
