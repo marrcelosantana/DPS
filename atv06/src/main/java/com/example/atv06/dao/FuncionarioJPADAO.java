@@ -26,6 +26,7 @@ public class FuncionarioJPADAO implements FuncionarioDAO {
     public void deletar(int id) throws SQLException {
         entityManager = JPAUtil.getEntityManager();
         Funcionario funcionario = buscar(id);
+        entityManager.getTransaction().begin();
         entityManager.remove(funcionario);
         JPAUtil.commit();
     }
