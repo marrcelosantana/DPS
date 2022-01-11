@@ -18,12 +18,12 @@ import java.util.List;
 @EntityScan("com.example.trabalho02.entity")
 @EnableJpaRepositories("com.example.trabalho02.dao")
 
-public class CrudAlunos implements CommandLineRunner {
+public class MainAlunos implements CommandLineRunner {
     @Autowired
     public AlunoDAO templateAluno;
 
     public static void main(String[] args) {
-        SpringApplicationBuilder builder = new SpringApplicationBuilder(CrudAlunos.class);
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(MainAlunos.class);
         builder.headless(false).run(args);
     }
 

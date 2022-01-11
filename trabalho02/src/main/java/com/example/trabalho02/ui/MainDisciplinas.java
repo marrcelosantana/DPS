@@ -14,12 +14,12 @@ import java.util.List;
 @SpringBootApplication
 @ComponentScan("com.example.trabalho02")
 
-public class CrudDisciplinas implements CommandLineRunner {
+public class MainDisciplinas implements CommandLineRunner {
     @Autowired
     public DisciplinaDAO templateDisciplina;
 
     public static void main(String[] args) {
-        SpringApplicationBuilder builder = new SpringApplicationBuilder(CrudDisciplinas.class);
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(MainDisciplinas.class);
         builder.headless(false).run(args);
     }
 
@@ -82,7 +82,7 @@ public class CrudDisciplinas implements CommandLineRunner {
                 }
             }
             if(escolha == '4'){ //Buscar apenas uma disciplina.
-                id = Integer.parseInt(JOptionPane.showInputDialog("id"));
+                id = Integer.parseInt(JOptionPane.showInputDialog("Digite o ID:"));
                 disciplina = templateDisciplina.findFirstById(id);
                 mostrarUmaDisciplina(disciplina);
             }

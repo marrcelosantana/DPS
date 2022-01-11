@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface AlunoDAO extends JpaRepository<Aluno, Integer> {
 
     @Query(name = "alunoPorId")
-    public Aluno findFirstById(int id);
+    Aluno findFirstById(int id);
 
     @Query(name = "alunoPorMatricula")
-    public Aluno findFirstByMatricula(String matricula);
+    Aluno findFirstByMatricula(String matricula);
 }
