@@ -11,6 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.swing.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -27,16 +30,19 @@ public class MainAlunos implements CommandLineRunner {
         builder.headless(false).run(args);
     }
 
-    public static void adicionarAluno(Aluno aluno){
+    public void adicionarAluno(Aluno aluno) throws ParseException {
         String nome = JOptionPane.showInputDialog("Nome", aluno.getNome());
         String email = JOptionPane.showInputDialog("Email", aluno.getEmail());
         String matricula = JOptionPane.showInputDialog("Matrícula", aluno.getMatricula());
         String cpf = JOptionPane.showInputDialog("CPF", aluno.getCpf());
+        String dataDeNascimento = JOptionPane.showInputDialog("Data de nascimento", aluno.getDatanascimento());
+        java.util.Date data = new SimpleDateFormat("dd/MM/yyyy").parse(dataDeNascimento);
 
         aluno.setNome(nome);
         aluno.setEmail(email);
         aluno.setMatricula(matricula);
         aluno.setCpf(cpf);
+        aluno.setDatanascimento(alterarTipoDeData(data));
     }
 
     public void mostrarUmAluno(Aluno aluno){
@@ -54,6 +60,12 @@ public class MainAlunos implements CommandLineRunner {
             listagem.append(aluno).append("\n");
         }
         JOptionPane.showMessageDialog(null, listagem.length() == 0 ? "Nenhum aluno encontrado" : listagem);
+    }
+
+    public java.sql.Date alterarTipoDeData(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateSql = simpleDateFormat.format(date);
+        return java.sql.Date.valueOf(dateSql);
     }
 
     @Override
@@ -110,6 +122,12 @@ public class MainAlunos implements CommandLineRunner {
                 String matricula = JOptionPane.showInputDialog("Digite a matrícula:");
                 aluno = templateAluno.findFirstByMatricula(matricula);
                 mostrarUmAlunoPorMatricula(aluno);
+            }
+            if(escolha == '7') { //Buscar alunos por data de nascimento.
+                String data = JOptionPane.showInputDialog("Digite a data de nascimento do aluno:");
+                java.util.Date dataUtil = new SimpleDateFormat("dd/MM/yyyy").parse(data);
+                java.sql.Date dataSql = alterarTipoDeData(dataUtil);
+                listarAlunos(templateAluno.findAlunosByDatanascimento(dataSql));
             }
         }
     }

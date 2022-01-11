@@ -3,14 +3,14 @@ package com.example.trabalho02.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 
 @NamedQueries({
     @NamedQuery(name = "alunoPorId", query = "select aluno from Aluno aluno where aluno.id = :id"),
-    @NamedQuery(name = "alunoPorCpf", query = "select aluno from Aluno aluno where aluno.cpf = :cpf"),
     @NamedQuery(name = "alunoPorMatricula", query = "select aluno from Aluno aluno where aluno.matricula = :matricula"),
-    @NamedQuery(name = "alunoPorEmail", query = "select aluno from Aluno aluno where aluno.email = :email")
+    @NamedQuery(name = "alunoPorEmail", query = "select aluno from Aluno aluno where aluno.email = :email"),
+    @NamedQuery(name = "alunoPorDatanascimento", query = "select aluno from Aluno aluno where aluno.datanascimento >= :data")
 })
 
 @Entity
@@ -27,8 +27,6 @@ public class Aluno {
     @NonNull @Getter @Setter private String matricula;
     @NonNull @Getter @Setter private String email;
     @NonNull @Getter @Setter private String cpf;
-    @NonNull @Getter @Setter private Date dataDeNascimento;
+    @NonNull @Getter @Setter private Date datanascimento;
 
-    @Transient
-    @NonNull @Getter @Setter private String[] disciplinasCursadas;
 }

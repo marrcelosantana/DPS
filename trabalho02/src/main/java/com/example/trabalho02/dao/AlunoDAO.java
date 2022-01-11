@@ -4,6 +4,9 @@ import com.example.trabalho02.entity.Aluno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.sql.Date;
+import java.util.List;
+
 public interface AlunoDAO extends JpaRepository<Aluno, Integer> {
 
     @Query(name = "alunoPorId")
@@ -11,4 +14,7 @@ public interface AlunoDAO extends JpaRepository<Aluno, Integer> {
 
     @Query(name = "alunoPorMatricula")
     Aluno findFirstByMatricula(String matricula);
+
+    @Query(name = "alunoPorDatanascimento")
+    List<Aluno> findAlunosByDatanascimento(Date data);
 }
