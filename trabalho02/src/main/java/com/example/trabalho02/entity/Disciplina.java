@@ -4,6 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@NamedQueries({
+    @NamedQuery(name = "disciplinaPorId", query = "select disciplina from Disciplina disciplina where disciplina.id = :id"),
+    @NamedQuery(name = "disciplinaPorCodigo", query = "select disciplina from Disciplina disciplina where disciplina.codigo = :codigo"),
+})
+
 @Entity
 @Table(name = "disciplinas")
 @NoArgsConstructor
