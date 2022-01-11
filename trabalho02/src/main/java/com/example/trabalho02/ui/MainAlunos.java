@@ -58,6 +58,10 @@ public class MainAlunos implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        char escolha = '0';
+        Aluno aluno;
+        int id;
+
         String opcoes = "Escolha uma das seguintes opções:\n" +
                 "1: Adicionar um aluno\n" +
                 "2: Deletar um aluno\n" +
@@ -67,9 +71,6 @@ public class MainAlunos implements CommandLineRunner {
                 "6: Buscar aluno por matrícula\n" +
                 "7: Buscar aluno por data de nascimento\n" +
                 "x: Sair do sistema\n";
-        char escolha = '0';
-        Aluno aluno;
-        int id;
 
         while(escolha != 'x'){
             escolha = JOptionPane.showInputDialog(opcoes).charAt(0);
@@ -94,7 +95,7 @@ public class MainAlunos implements CommandLineRunner {
                     adicionarAluno(aluno);
                     templateAluno.save(aluno);
                 } else {
-                JOptionPane.showMessageDialog(null, "Aluno não encontrado");
+                    JOptionPane.showMessageDialog(null, "Aluno não encontrado");
                 }
             }
             if(escolha == '4'){ //Buscar apenas um aluno.

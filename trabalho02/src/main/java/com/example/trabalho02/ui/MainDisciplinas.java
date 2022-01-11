@@ -43,6 +43,10 @@ public class MainDisciplinas implements CommandLineRunner {
     }
 
     public void run(String... args) throws Exception{
+        char escolha = '0';
+        Disciplina disciplina;
+        int id;
+
         String opcoes = "Escolha uma das seguintes opções:\n" +
                 "1: Adicionar uma disciplina\n" +
                 "2: Deletar uma disciplina\n" +
@@ -51,9 +55,6 @@ public class MainDisciplinas implements CommandLineRunner {
                 "5: Listar todas as disciplinas\n" +
                 "6: Buscar disciplina por código\n" +
                 "x: Sair do sistema\n";
-        char escolha = '0';
-        Disciplina disciplina;
-        int id;
 
         while(escolha != 'x'){
             escolha = JOptionPane.showInputDialog(opcoes).charAt(0);
