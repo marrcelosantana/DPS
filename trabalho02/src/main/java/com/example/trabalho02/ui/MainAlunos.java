@@ -55,26 +55,6 @@ public class MainAlunos implements CommandLineRunner {
         aluno.setDatanascimento(alterarTipoDeData(data));
     }
 
-    public void deletarAluno(){
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será deletado:"));
-        Aluno aluno = templateAluno.findFirstById(id);
-        if(aluno != null){
-            templateAluno.deleteById(aluno.getId());
-        } else {
-            JOptionPane.showMessageDialog(null, "Aluno não encontrado");
-        }
-    }
-
-    public void editarAluno() throws ParseException {
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será editado:"));
-        Aluno aluno = templateAluno.findFirstById(id);
-        if(aluno != null) {
-            adicionarAluno(aluno);
-            templateAluno.save(aluno);
-        } else {
-            JOptionPane.showMessageDialog(null, "Disciplina não encontrada");
-        }
-    }
 
     public void mostrarUmAluno(Aluno aluno){
         JOptionPane.showMessageDialog(null, aluno == null ? "Nenhum aluno encontrado" : aluno);
@@ -83,6 +63,10 @@ public class MainAlunos implements CommandLineRunner {
     public void mostrarUmAlunoPorMatricula(Aluno aluno){
         JOptionPane.showMessageDialog(null, aluno == null ? "Nenhum aluno encontrado"
         : "Nome: " + aluno.getNome() + "\n" + "Email: " + aluno.getEmail() + "\n");
+    }
+
+    public void mostrarUmAlunoPorNome(){
+        listarAlunos(templateAluno.findByNomeStartingWith(JOptionPane.showInputDialog("Digito nome do aluno para busca")));
     }
 
     public void listarAlunos(List<Aluno> alunos){
@@ -121,16 +105,16 @@ public class MainAlunos implements CommandLineRunner {
         char escolha = '0';
         Aluno aluno;
         int id;
-
         String opcoes = "Escolha uma das seguintes opções:\n" +
                 "1: Adicionar um aluno\n" +
-                "2: Deletar um aluno\n" +
-                "3: Editar um aluno\n" +
-                "4: Buscar um único aluno\n" +
+                "2: Deletar um aluno por id\n" +
+                "3: Editar um aluno por id\n" +
+                "4: Buscar um aluno por id\n" +
                 "5: Listar todos os alunos\n" +
                 "6: Buscar aluno por matrícula\n" +
-                "7: Buscar aluno por data de nascimento\n" +
-                "8: Atribuir disciplina a aluno\n" +
+                "7: Lista por data de nascimento\n" +
+                "8: Buscar aluno por nome\n" +
+                "9: Atribuir disciplina a aluno\n" +
                 "x: Sair do sistema\n";
 
         while(escolha != 'x'){
@@ -141,10 +125,23 @@ public class MainAlunos implements CommandLineRunner {
                 templateAluno.save(aluno);
             }
             if(escolha == '2'){ //Deletar um aluno.
-                deletarAluno();
+                id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será deletado:"));
+                aluno = templateAluno.findFirstById(id);
+                if(aluno != null){
+                    templateAluno.deleteById(aluno.getId());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Aluno não encontrado");
+                }
             }
             if(escolha == '3'){ //Editar um aluno.
-                editarAluno();
+                id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será editado:"));
+                aluno = templateAluno.findFirstById(id);
+                if(aluno != null) {
+                    adicionarAluno(aluno);
+                    templateAluno.save(aluno);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Disciplina não encontrada");
+                }
             }
             if(escolha == '4'){ //Buscar apenas um aluno.
                 id = Integer.parseInt(JOptionPane.showInputDialog("Id:"));
@@ -165,7 +162,10 @@ public class MainAlunos implements CommandLineRunner {
                 java.sql.Date dataSql = alterarTipoDeData(dataUtil);
                 listarAlunos(templateAluno.findAlunosByDatanascimento(dataSql));
             }
-            if(escolha == '8'){ //Atribuir disciplina para um aluno.
+            if(escolha == '8'){ //Buscar aluno por nome.
+                mostrarUmAlunoPorNome();
+            }
+            if(escolha == '9'){ //Atribuir disciplina para um aluno.
                 atribuirDisciplina();
             }
         }
