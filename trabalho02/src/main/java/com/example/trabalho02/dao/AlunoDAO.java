@@ -12,7 +12,7 @@ public interface AlunoDAO extends JpaRepository<Aluno, Integer> {
     @Query(name = "alunoPorId")
     Aluno findFirstById(int id);
 
-    @Query(name = "alunoPorMatricula")
+    @Query("select aluno from Aluno aluno where aluno.matricula = :matricula")
     Aluno findFirstByMatricula(String matricula);
 
     @Query(name = "alunoPorDatanascimento")

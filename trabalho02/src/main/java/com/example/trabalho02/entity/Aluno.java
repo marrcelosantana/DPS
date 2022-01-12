@@ -7,7 +7,6 @@ import java.util.List;
 
 @NamedQueries({
     @NamedQuery(name = "alunoPorId", query = "select aluno from Aluno aluno where aluno.id = :id"),
-    @NamedQuery(name = "alunoPorMatricula", query = "select aluno from Aluno aluno where aluno.matricula = :matricula"),
     @NamedQuery(name = "alunoPorEmail", query = "select aluno from Aluno aluno where aluno.email = :email"),
     @NamedQuery(name = "alunoPorDatanascimento", query = "select aluno from Aluno aluno where aluno.datanascimento >= :data")
 })
