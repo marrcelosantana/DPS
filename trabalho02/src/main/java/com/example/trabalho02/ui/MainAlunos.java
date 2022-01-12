@@ -60,7 +60,9 @@ public class MainAlunos implements CommandLineRunner {
         JOptionPane.showMessageDialog(null, aluno == null ? "Nenhum aluno encontrado" : aluno);
     }
 
-    public void mostrarUmAlunoPorMatricula(Aluno aluno){
+    public void mostrarUmAlunoPorMatricula(){
+        String matricula = JOptionPane.showInputDialog("Digite a matrícula:");
+        Aluno aluno = templateAluno.findFirstByMatricula(matricula);
         JOptionPane.showMessageDialog(null, aluno == null ? "Nenhum aluno encontrado"
         : "Nome: " + aluno.getNome() + "\n" + "Email: " + aluno.getEmail() + "\n");
     }
@@ -77,10 +79,38 @@ public class MainAlunos implements CommandLineRunner {
         JOptionPane.showMessageDialog(null, listagem.length() == 0 ? "Nenhum aluno encontrado" : listagem);
     }
 
+    public void deletarAluno(){
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será deletado:"));
+        Aluno aluno = templateAluno.findFirstById(id);
+        if(aluno != null){
+            templateAluno.deleteById(aluno.getId());
+        } else {
+            JOptionPane.showMessageDialog(null, "Aluno não encontrado");
+        }
+    }
+
+    public void editarAluno() throws ParseException {
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será editado:"));
+        Aluno aluno = templateAluno.findFirstById(id);
+        if(aluno != null) {
+            adicionarAluno(aluno);
+            templateAluno.save(aluno);
+        } else {
+            JOptionPane.showMessageDialog(null, "Disciplina não encontrada");
+        }
+    }
+
     public java.sql.Date alterarTipoDeData(Date date){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateSql = simpleDateFormat.format(date);
         return java.sql.Date.valueOf(dateSql);
+    }
+
+    public void buscaPorData() throws ParseException {
+        String data = JOptionPane.showInputDialog("Digite a data de nascimento do aluno:");
+        java.util.Date dataUtil = new SimpleDateFormat("dd/MM/yyyy").parse(data);
+        java.sql.Date dataSql = alterarTipoDeData(dataUtil);
+        listarAlunos(templateAluno.findAlunosByDatanascimento(dataSql));
     }
 
     public void atribuirDisciplina(){
@@ -125,23 +155,10 @@ public class MainAlunos implements CommandLineRunner {
                 templateAluno.save(aluno);
             }
             if(escolha == '2'){ //Deletar um aluno.
-                id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será deletado:"));
-                aluno = templateAluno.findFirstById(id);
-                if(aluno != null){
-                    templateAluno.deleteById(aluno.getId());
-                } else {
-                    JOptionPane.showMessageDialog(null, "Aluno não encontrado");
-                }
+                deletarAluno();
             }
             if(escolha == '3'){ //Editar um aluno.
-                id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será editado:"));
-                aluno = templateAluno.findFirstById(id);
-                if(aluno != null) {
-                    adicionarAluno(aluno);
-                    templateAluno.save(aluno);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Disciplina não encontrada");
-                }
+                editarAluno();
             }
             if(escolha == '4'){ //Buscar apenas um aluno.
                 id = Integer.parseInt(JOptionPane.showInputDialog("Id:"));
@@ -152,15 +169,10 @@ public class MainAlunos implements CommandLineRunner {
                 listarAlunos(templateAluno.findAll());
             }
             if(escolha == '6') { //Buscar aluno por matrícula.
-                String matricula = JOptionPane.showInputDialog("Digite a matrícula:");
-                aluno = templateAluno.findFirstByMatricula(matricula);
-                mostrarUmAlunoPorMatricula(aluno);
+                mostrarUmAlunoPorMatricula();
             }
-            if(escolha == '7') { //Buscar alunos por data de nascimento.
-                String data = JOptionPane.showInputDialog("Digite a data de nascimento do aluno:");
-                java.util.Date dataUtil = new SimpleDateFormat("dd/MM/yyyy").parse(data);
-                java.sql.Date dataSql = alterarTipoDeData(dataUtil);
-                listarAlunos(templateAluno.findAlunosByDatanascimento(dataSql));
+            if(escolha == '7') { //Buscar por data.
+                buscaPorData();
             }
             if(escolha == '8'){ //Buscar aluno por nome.
                 mostrarUmAlunoPorNome();
