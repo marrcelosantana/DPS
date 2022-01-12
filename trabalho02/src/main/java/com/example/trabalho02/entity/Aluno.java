@@ -1,10 +1,9 @@
 package com.example.trabalho02.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.sql.Date;
-
+import java.util.List;
 
 @NamedQueries({
     @NamedQuery(name = "alunoPorId", query = "select aluno from Aluno aluno where aluno.id = :id"),
@@ -29,4 +28,7 @@ public class Aluno {
     @NonNull @Getter @Setter private String cpf;
     @NonNull @Getter @Setter private Date datanascimento;
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "aluno")
+    @Getter @Setter private List<Associacao> associacoes;
 }

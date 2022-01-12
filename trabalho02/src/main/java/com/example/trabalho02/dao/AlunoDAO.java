@@ -17,4 +17,5 @@ public interface AlunoDAO extends JpaRepository<Aluno, Integer> {
 
     @Query(name = "alunoPorDatanascimento")
     List<Aluno> findAlunosByDatanascimento(Date data);
+
 }

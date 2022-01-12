@@ -1,7 +1,11 @@
 package com.example.trabalho02.ui;
 
 import com.example.trabalho02.dao.AlunoDAO;
+import com.example.trabalho02.dao.AssociacaoDAO;
+import com.example.trabalho02.dao.DisciplinaDAO;
 import com.example.trabalho02.entity.Aluno;
+import com.example.trabalho02.entity.Associacao;
+import com.example.trabalho02.entity.Disciplina;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +29,12 @@ public class MainAlunos implements CommandLineRunner {
     @Autowired
     public AlunoDAO templateAluno;
 
+    @Autowired
+    public AssociacaoDAO templateAssociacao;
+
+    @Autowired
+    public DisciplinaDAO templateDisciplina;
+
     public static void main(String[] args) {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(MainAlunos.class);
         builder.headless(false).run(args);
@@ -43,6 +53,27 @@ public class MainAlunos implements CommandLineRunner {
         aluno.setMatricula(matricula);
         aluno.setCpf(cpf);
         aluno.setDatanascimento(alterarTipoDeData(data));
+    }
+
+    public void deletarAluno(){
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será deletado:"));
+        Aluno aluno = templateAluno.findFirstById(id);
+        if(aluno != null){
+            templateAluno.deleteById(aluno.getId());
+        } else {
+            JOptionPane.showMessageDialog(null, "Aluno não encontrado");
+        }
+    }
+
+    public void editarAluno() throws ParseException {
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será editado:"));
+        Aluno aluno = templateAluno.findFirstById(id);
+        if(aluno != null) {
+            adicionarAluno(aluno);
+            templateAluno.save(aluno);
+        } else {
+            JOptionPane.showMessageDialog(null, "Disciplina não encontrada");
+        }
     }
 
     public void mostrarUmAluno(Aluno aluno){
@@ -68,6 +99,23 @@ public class MainAlunos implements CommandLineRunner {
         return java.sql.Date.valueOf(dateSql);
     }
 
+    public void atribuirDisciplina(){
+        int alunoId = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do Aluno:"));
+        String disciplinaCodigo = JOptionPane.showInputDialog("Digite o codigo da Disciplina:");
+
+        Aluno aluno = templateAluno.findFirstById(alunoId);
+        Disciplina disciplina = templateDisciplina.findFirstByCodigo(disciplinaCodigo);
+
+        if(aluno != null && disciplina != null){
+            Associacao associacao = new Associacao();
+            associacao.setAluno(aluno);
+            associacao.setDisciplina(disciplina);
+            templateAssociacao.save(associacao);
+        }else{
+            JOptionPane.showMessageDialog(null, "Dados não encontrados.");
+        }
+    }
+
     @Override
     public void run(String... args) throws Exception {
         char escolha = '0';
@@ -82,6 +130,7 @@ public class MainAlunos implements CommandLineRunner {
                 "5: Listar todos os alunos\n" +
                 "6: Buscar aluno por matrícula\n" +
                 "7: Buscar aluno por data de nascimento\n" +
+                "8: Atribuir disciplina a aluno\n" +
                 "x: Sair do sistema\n";
 
         while(escolha != 'x'){
@@ -92,23 +141,10 @@ public class MainAlunos implements CommandLineRunner {
                 templateAluno.save(aluno);
             }
             if(escolha == '2'){ //Deletar um aluno.
-                id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será deletado:"));
-                aluno = templateAluno.findFirstById(id);
-                if(aluno != null){
-                    templateAluno.deleteById(aluno.getId());
-                } else {
-                    JOptionPane.showMessageDialog(null, "Aluno não encontrado");
-                }
+                deletarAluno();
             }
             if(escolha == '3'){ //Editar um aluno.
-                id = Integer.parseInt(JOptionPane.showInputDialog("Digite o id do aluno que será editado:"));
-                aluno = templateAluno.findFirstById(id);
-                if(aluno != null) {
-                    adicionarAluno(aluno);
-                    templateAluno.save(aluno);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Aluno não encontrado");
-                }
+                editarAluno();
             }
             if(escolha == '4'){ //Buscar apenas um aluno.
                 id = Integer.parseInt(JOptionPane.showInputDialog("Id:"));
@@ -128,6 +164,9 @@ public class MainAlunos implements CommandLineRunner {
                 java.util.Date dataUtil = new SimpleDateFormat("dd/MM/yyyy").parse(data);
                 java.sql.Date dataSql = alterarTipoDeData(dataUtil);
                 listarAlunos(templateAluno.findAlunosByDatanascimento(dataSql));
+            }
+            if(escolha == '8'){ //Atribuir disciplina para um aluno.
+                atribuirDisciplina();
             }
         }
     }

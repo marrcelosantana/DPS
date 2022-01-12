@@ -10,5 +10,5 @@ public interface DisciplinaDAO extends JpaRepository<Disciplina, Integer> {
     Disciplina findFirstById(int id);
 
     @Query(name = "disciplinaPorCodigo")
-    Disciplina findFirstByCode(String codigo);
+    Disciplina findFirstByCodigo(String codigo);
 }
